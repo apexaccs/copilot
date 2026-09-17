@@ -92,6 +92,7 @@ async function main(): Promise<void> {
 					"--no-compile-autoload-dotenv",
 					"--no-compile-autoload-tsconfig",
 					"--no-compile-autoload-package-json",
+                                        "--minify",
 					"--keep-names",
 					"--define",
 					'process.env.PI_COMPILED="true"',
