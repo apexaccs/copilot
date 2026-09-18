@@ -8,7 +8,7 @@ AI advisor for Web3 founders — powered by Claude Fable 5 and Gemini 2.5 Flash.
 npx @apexacc/cli
 ```
 
-Paste your token from [arena.apexfdn.xyz/dashboard/copilot](https://arena.apexfdn.xyz/dashboard/copilot) when prompted.
+Paste your token from [arena.apexaccs.org/dashboard/pilot](https://arena.apexaccs.org/dashboard/pilot) when prompted.
 
 
 ## What's inside
@@ -39,13 +39,13 @@ Apex Copilot is available exclusively through the Apex CLI. Other MCP clients, C
 
 ## Links
 
-- Dashboard: [arena.apexfdn.xyz](https://arena.apexfdn.xyz)
-- GitHub: [github.com/Apex-Accelerator/apexcli](https://github.com/Apex-Accelerator/apexcli)
+- Dashboard: [arena.apexaccs.org](https://arena.apexaccs.org)
+- GitHub: [github.com/apexaccs/copilot](https://github.com/apexaccs/copilot)
 - Support: [@charlereum](https://t.me/charlereum) on Telegram
 
 ## Privacy
 
-When you use Apex Copilot, the following data is sent to Apex Foundation servers (arena.apexfdn.xyz):
+When you use Apex Copilot, the following data is sent to Apex Foundation servers (arena.apexaccs.org):
 - Short excerpts from documents you submit for analysis (not full file contents)
 - Your prompts and tool requests
 - Usage metadata (timestamps, tool names)

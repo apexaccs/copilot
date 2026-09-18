@@ -192,7 +192,7 @@ jobs:
             pkg.name = '@apexacc/cli';
             pkg.version = process.env.GITHUB_REF_NAME.replace(/^v/, '');
             pkg.releaseVersion = process.env.GITHUB_REF_NAME.replace(/^v/, '');
-            pkg.repository = { type: 'git', url: 'git+https://github.com/Apex-Accelerator/apexcli.git' };
+            pkg.repository = { type: 'git', url: 'git+https://github.com/apexaccs/copilot.git' };
             fs.writeFileSync('package.json', JSON.stringify(pkg, null, 2));
           "
           npm publish --access public --provenance

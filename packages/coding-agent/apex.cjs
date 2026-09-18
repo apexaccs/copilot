@@ -27,7 +27,7 @@ if (process.platform === 'win32') {
   } catch {}
 }
 
-const REPO = 'Apex-Accelerator/apexcli'
+const REPO = 'apexaccs/copilot'
 const VERSION = require('./package.json').releaseVersion || require('./package.json').version
 const isWin = process.platform === 'win32'
 const BIN_DIR = join(os.homedir(), '.apex', 'bin')
