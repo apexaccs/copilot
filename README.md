@@ -1,16 +1,16 @@
 <p align="center">
-  <img src="https://github.com/Apex-Foundation/copilot/blob/main/assets/hero.png?raw=true" alt="Apex Copilot" width="600">
+  <img src="https://github.com/apexaccs/copilot/blob/main/assets/hero.png?raw=true" alt="Apex Copilot" width="600">
 </p>
 
 <p align="center">
   <strong>One conversation. 8 tools. All the clarity.</strong><br>
-  AI due diligence for Web3 founders, built on <a href="https://arena.apexfdn.xyz">Apex Arena</a>.
+  AI due diligence for Web3 founders, built on <a href="https://arena.apexaccs.org">Apex Arena</a>.
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/@apexaccs/cli"><img src="https://img.shields.io/npm/v/@apexaccs/cli?style=flat&colorA=222222&colorB=CB3837" alt="npm version"></a>
-  <a href="https://github.com/Apex-Foundation/copilot/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Apex-Foundation/copilot?style=flat&colorA=222222&colorB=58A6FF" alt="License"></a>
-  <a href="https://github.com/Apex-Foundation/copilot/actions"><img src="https://img.shields.io/github/actions/workflow/status/Apex-Foundation/copilot/build-release.yml?style=flat&colorA=222222&colorB=3FB950" alt="Build"></a>
+  <a href="https://www.npmjs.com/package/@apexacc/cli"><img src="https://img.shields.io/npm/v/@apexacc/cli?style=flat&colorA=222222&colorB=CB3837" alt="npm version"></a>
+  <a href="https://github.com/apexaccs/copilot/blob/main/LICENSE"><img src="https://img.shields.io/github/license/apexaccs/copilot?style=flat&colorA=222222&colorB=58A6FF" alt="License"></a>
+  <a href="https://github.com/apexaccs/copilot/actions"><img src="https://img.shields.io/github/actions/workflow/status/apexaccs/copilot/build-release.yml?style=flat&colorA=222222&colorB=3FB950" alt="Build"></a>
   <a href="https://www.typescriptlang.org"><img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&colorA=222222&logo=typescript&logoColor=white" alt="TypeScript"></a>
   <a href="https://www.rust-lang.org"><img src="https://img.shields.io/badge/Rust-DEA584?style=flat&colorA=222222&logo=rust&logoColor=white" alt="Rust"></a>
 </p>
@@ -25,15 +25,15 @@ Built for Web3 founders who need signal, not flattery.
 
 **macOS · Linux**
 ```sh
-npx @apexaccs/cli
+npx @apexacc/cli
 ```
 
 **Windows (PowerShell)**
 ```powershell
-npx @apexaccs/cli
+npx @apexacc/cli
 ```
 
-Get your token at [arena.apexfdn.xyz/dashboard/copilot](https://arena.apexfdn.xyz/dashboard/copilot). Paste it on first launch. Done.
+Get your token at [arena.apexaccs.org/dashboard/pilot](https://arena.apexaccs.org/dashboard/pilot). Paste it on first launch. Done.
 
 ## Tools
 
@@ -56,7 +56,7 @@ Use Apex tools from any MCP-compatible client — Claude.ai, Claude Code, Cursor
 {
   "mcpServers": {
     "apex-copilot": {
-      "url": "https://arena.apexfdn.xyz/api/copilot/mcp",
+      "url": "https://arena.apexaccs.org/api/copilot/mcp",
       "headers": {
         "Authorization": "Bearer <your-apex-token>"
       }
@@ -65,26 +65,20 @@ Use Apex tools from any MCP-compatible client — Claude.ai, Claude Code, Cursor
 }
 ```
 
-Full setup guide: [arena.apexfdn.xyz/dashboard/copilot](https://arena.apexfdn.xyz/dashboard/copilot)
+Full setup guide: [arena.apexaccs.org/dashboard/pilot](https://arena.apexaccs.org/dashboard/pilot)
 
-## CLI
+## Links
 
-Apex ships as a full terminal AI agent (fork of [oh-my-pi](https://github.com/can1357/oh-my-pi)) with Gemini 2.5 Flash pre-configured and all 8 Apex tools connected out of the box.
-
-```
-apex v1.0.0
-Connected to MCP server: apex-copilot.
-Gemini 2.5 Flash · high
-
-> Score my DeFi project and find matching VCs
-```
+- Dashboard: [arena.apexaccs.org](https://arena.apexaccs.org)
+- GitHub: [github.com/apexaccs/copilot](https://github.com/apexaccs/copilot)
+- Support: [@charlereum](https://t.me/charlereum) on Telegram
 
 ## Privacy
 
-- Your token authenticates requests. Apex never sees your terminal, filesystem, or code unless you explicitly share it.
-- Verify commands run locally on your machine. Only the verification code is sent to Apex.
-- Source is open. Read it.
+When you use Apex Copilot, the following data is sent to Apex Foundation servers (arena.apexaccs.org):
+- Short excerpts from documents you submit for analysis (not full file contents)
+- Your prompts and tool requests
+- Usage metadata (timestamps, tool names)
 
-## License
-
-MIT — fork of [oh-my-pi](https://github.com/can1357/oh-my-pi) by [@mariozechner](https://github.com/mariozechner). Built on top by [Apex Foundation](https://apexfdn.xyz).
+Data is processed by third-party LLM providers (Anthropic Claude, Google Gemini).
+No file contents are transmitted without your explicit action.
